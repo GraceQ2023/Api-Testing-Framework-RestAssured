@@ -8,10 +8,9 @@
         </classes>
     </test>
 
-<!--    <test name="RestfulBookerTests">-->
-<!--        <classes>-->
-<!--            <class name="com.myorg.apitests" />-->
-<!--            <class name="com.orangehrm.tests.APITest" />-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="BookerTests">
+        <classes>
+            <class name="com.myorg.apitests.apis.booker.AuthTest" />
+        </classes>
+    </test>
 </suite>
