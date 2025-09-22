@@ -11,6 +11,7 @@
     <test name="BookerTests">
         <classes>
             <class name="com.myorg.apitests.apis.booker.AuthTest" />
+            <class name="com.myorg.apitests.apis.booker.CRUDTest" />
         </classes>
     </test>
 </suite>

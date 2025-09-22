@@ -23,9 +23,13 @@ import java.util.Map;
 public class AuthTest extends BaseTest {
 
     /**
-     * Data-driven login tests using Excel data.
+     * Data-driven login tests using Excel data
      * Excel Columns: username | password | expectedStatus | expectedKey
      */
+
+    // shared token for other tests
+    public static String token;
+
     @Test(dataProvider= "loginData", dataProviderClass = TestDataProvider.class)
     public void testLogin(String username, String password, String expectedStatusCode, String expectedKey){
 
@@ -51,11 +55,15 @@ public class AuthTest extends BaseTest {
 
         // Check response key
         if("token".equalsIgnoreCase(expectedKey)){
-            Assert.assertTrue(responseBody.contains("token"), "Expected token in response body but got: " + responseBody);
+            Assert.assertTrue(responseBody.contains("token"),
+                    "Expected token in response body but got: " + responseBody);
+            // save token for later tests
+            token = response.jsonPath().getString("token");
+
         }else if ("reason".equalsIgnoreCase(expectedKey)){
             Assert.assertTrue(responseBody.contains("reason"), "Expected reason in response body but got: " + responseBody);
         }
-
     }
 
 }
+

@@ -1,5 +1,7 @@
 package com.myorg.apitests.base;
 
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
@@ -7,6 +9,8 @@ import org.testng.annotations.BeforeSuite;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 /**

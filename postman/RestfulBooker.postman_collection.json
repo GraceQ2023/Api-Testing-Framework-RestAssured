@@ -1,0 +1,384 @@
+{
+	"info": {
+		"_postman_id": "5e70ab74-8f6b-4957-81ee-eb91ee376b55",
+		"name": "BookerAPIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34680269",
+		"_collection_link": "https://postman-api-team-3631.postman.co/workspace/4d0a3101-f10b-426b-bbf3-2c05725461e4/collection/34680269-5e70ab74-8f6b-4957-81ee-eb91ee376b55?action=share&source=collection_link&creator=34680269"
+	},
+	"item": [
+		{
+			"name": "Auth -  Valid login with token created",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response body contains string - token\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"token\");",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"pm.collectionVariables.set(\"token\", jsonData.token);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"baseURL_Bookers\", \"https://restful-booker.herokuapp.com\")",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"username\": \"admin\",\n  \"password\": \"password123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL_Bookers}}/auth",
+					"host": [
+						"{{baseURL_Bookers}}"
+					],
+					"path": [
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth -  Invalid login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response body matches string - reason\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"reason\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"username\": \"wrongadmin\",\n  \"password\": \"wrongpassword123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL_Bookers}}/auth",
+					"host": [
+						"{{baseURL_Bookers}}"
+					],
+					"path": [
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all booking ids",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL_Bookers}}/booking",
+					"host": [
+						"{{baseURL_Bookers}}"
+					],
+					"path": [
+						"booking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a new booking",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response body contains string - bookingid\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"bookingid\");",
+							"});",
+							"",
+							"var jsonData = pm.response.json(); ",
+							"pm.collectionVariables.set(\"id\", jsonData.bookingid)",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstname\" : \"Grace\",\n    \"lastname\" : \"Brown\",\n    \"totalprice\" : 111,\n    \"depositpaid\" : true,\n    \"bookingdates\" : {\n        \"checkin\" : \"2018-01-01\",\n        \"checkout\" : \"2019-01-01\"\n    },\n    \"additionalneeds\" : \"Breakfast\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL_Bookers}}/booking",
+					"host": [
+						"{{baseURL_Bookers}}"
+					],
+					"path": [
+						"booking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get booking by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 500ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL_Bookers}}/booking/{{id}}}",
+					"host": [
+						"{{baseURL_Bookers}}"
+					],
+					"path": [
+						"booking",
+						"{{id}}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a booking",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Body contains string - Yoga\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Yoga\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token={{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstname\" : \"Grace\",\n    \"lastname\" : \"Qin\",\n    \"totalprice\" : 888,\n    \"depositpaid\" : false,\n    \"bookingdates\" : {\n        \"checkin\" : \"2025-9-21\",\n        \"checkout\" : \"2025-9-26\"\n    },\n    \"additionalneeds\" : \"Yoga\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL_Bookers}}/booking/{{id}}}",
+					"host": [
+						"{{baseURL_Bookers}}"
+					],
+					"path": [
+						"booking",
+						"{{id}}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a booking",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"",
+							"pm.collectionVariables.unset(\"id\");",
+							"pm.collectionVariables.unset(\"baseURL_Bookers\");",
+							"pm.collectionVariables.unset(\"token\");"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "digest",
+					"digest": [
+						{
+							"key": "password",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "algorithm",
+							"value": "MD5",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46cGFzc3dvcmQxMjM=",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseURL_Bookers}}/booking/{{id}}}",
+					"host": [
+						"{{baseURL_Bookers}}"
+					],
+					"path": [
+						"booking",
+						"{{id}}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
