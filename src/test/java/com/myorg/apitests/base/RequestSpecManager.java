@@ -1,5 +1,6 @@
 package com.myorg.apitests.base;
 
+import com.myorg.apitests.utils.LoggingFilter;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
@@ -34,8 +35,8 @@ public class RequestSpecManager extends BaseTest {
         if(bookerSpec == null){
             bookerSpec = new RequestSpecBuilder()
                     .setBaseUri(prop.getProperty("booker.baseUrl"))
-                    .setContentType(ContentType.JSON)
-                    .log(LogDetail.ALL)
+                    .setContentType("application/json")
+                    .addFilter(new LoggingFilter())
                     .build();
         }
         return bookerSpec;
