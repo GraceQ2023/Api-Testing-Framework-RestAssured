@@ -1,30 +1,56 @@
 pipeline {
-  agent any
+    agent any
 
-
-  stages {
-    stage('Checkout') {
-      steps { checkout scm }
+    environment {
+        DOCKER_CLI = "/usr/local/bin/docker"
+        DOCKER_COMPOSE_FILE = "docker/docker-compose.yml"  // relative path in your repo
     }
 
-    stage('Run API Tests in Docker') {
-      steps {
-        sh 'docker compose up --exit-code-from api-tests'
-      }
+    stages {
+        stage('Checkout') {
+            steps {
+                echo "Skipping SCM checkout because Jenkinsfile is in UI"
+                checkout scm
+            }
+        }
+
+        stage('Debug Workspace') {
+            steps {
+                echo "Listing workspace files..."
+                sh 'ls -R'
+            }
+        }
+
+        stage('Run API Tests in Docker') {
+            steps {
+                echo "Starting API tests container..."
+                sh "${DOCKER_CLI} compose -f ${DOCKER_COMPOSE_FILE} up --exit-code-from api-tests"
+            }
+        }
+
+        stage('Publish Reports') {
+            steps {
+                // Surefire XML reports
+                junit 'target/surefire-reports/*.xml'
+
+                // Archive everything in target/ (includes ExtentReports)
+                archiveArtifacts artifacts: 'target/**', fingerprint: true
+            }
+        }
     }
 
-    stage('Publish Reports') {
-      steps {
-        junit 'target/surefire-reports/*.xml'
-        archiveArtifacts artifacts: 'target/**', fingerprint: true
-      }
-    }
-  }
+    post {
+        always {
+            echo "Cleaning up Docker containers..."
+            sh "${DOCKER_CLI} compose -f ${DOCKER_COMPOSE_FILE} down || true"
+        }
 
-  post {
-    always {
-      sh 'docker compose down'
+        success {
+            echo "Build SUCCESS"
+        }
+
+        failure {
+            echo "Build FAILED"
+        }
     }
-  }
 }
-
