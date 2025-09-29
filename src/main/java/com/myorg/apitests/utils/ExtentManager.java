@@ -22,7 +22,7 @@ public class ExtentManager {
     public static ExtentReports getInstance(){
         // only one notebook (ExtentReport) is used for the whole test run
         if(extent == null){
-            String reportPath =  System.getProperty("user.dir") + "/src/test/resources/report/extent-report.html";
+            String reportPath =  System.getProperty("user.dir") + "/target/extent-report.html";
             ExtentSparkReporter reporter = new ExtentSparkReporter(reportPath); // connects the HTML reporter(pen) to the report manager(notebook)
             reporter.config().setReportName("API Automation Report");  // shown on browser tab
             reporter.config().setDocumentTitle("Test Result"); // title of the report

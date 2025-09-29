@@ -1,0 +1,18 @@
+version: '3.9'
+
+services:
+  api-tests:
+    image: maven:3.9.0-eclipse-temurin-17    # official Maven + JDK 17 container, no need to install anything on Jenkins
+    container_name: api_tests
+    working_dir: /app   # container will run from inside the mounted folder.
+    volumes:
+      - ../:/app           # mount the current project folder into the container
+    command: mvn clean test -DsuiteXmlFile=testng.xml   # tells Docker to run tests via testng.xml
+    environment:
+      - MAVEN_OPTS=-Xmx1024m
+    networks:
+      - api-network
+
+networks:
+  api-network:
+    driver: bridge
