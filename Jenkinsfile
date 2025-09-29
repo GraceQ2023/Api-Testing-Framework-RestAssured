@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKER_CLI = "/usr/local/bin/docker"
-        DOCKER_COMPOSE_FILE = "docker/docker-compose.yml"  // relative path in your repo
+        DOCKER_COMPOSE_FILE = "docker/docker-compose.yml"
     }
 
     stages {
