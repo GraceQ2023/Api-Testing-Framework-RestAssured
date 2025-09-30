@@ -55,8 +55,6 @@ public class AuthTest extends BaseTest {
         int actualStatusCode = response.getStatusCode();
         String responseBody = response.asString();
 
-//        logger.info("Received response: " + responseBody);
-//        ExtentManager.logStep("Received response: " + responseBody);
 
         // Assert status code
         Assert.assertEquals(actualStatusCode, Integer.parseInt(expectedStatusCode), "Status code mismatch for user: " + username);
