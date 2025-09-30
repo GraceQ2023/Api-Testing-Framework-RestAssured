@@ -47,7 +47,7 @@ public class CRUDTest extends BaseTest {
         return booking;
     }
 
-    // POST request - create a new booking
+    // POST request - create a new booking via helper
     @Test (priority = 1, description = "Test POST request - create a new booking")
     public void testCreateBooking(){
         Map<String, Object> payload = createBookingPayload(
