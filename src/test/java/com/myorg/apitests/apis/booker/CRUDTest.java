@@ -47,8 +47,8 @@ public class CRUDTest extends BaseTest {
         return booking;
     }
 
-    @Test (priority = 1, description = "Test POST request - create a new booking")
     // POST request - create a new booking
+    @Test (priority = 1, description = "Test POST request - create a new booking")
     public void testCreateBooking(){
         Map<String, Object> payload = createBookingPayload(
                 "James", "Brown", 111, true,
@@ -74,8 +74,9 @@ public class CRUDTest extends BaseTest {
         ExtentManager.logStep("Booking created with ID: " + bookingId);
     }
 
-     @Test(priority = 2, description = "Test GET request - get a booking by id")
+
     // GET request - get booking by id
+     @Test(priority = 2, description = "Test GET request - get a booking by id")
     public void testGetBookingById(){
         logger.info("Fetching booking with ID: " + bookingId);
         ExtentManager.logStep("Fetching booking with ID: " + bookingId);
@@ -94,8 +95,8 @@ public class CRUDTest extends BaseTest {
         ExtentManager.logStep("Booking details retrieved successfully");
     }
 
-    @Test(priority = 3, description = "Test GET request - get all bookings")
     // GET request - get all bookings list
+    @Test(priority = 3, description = "Test GET request - get all bookings")
     public void testGetAllBookings(){
         logger.info("Fetching all bookings details");
         ExtentManager.logStep("Fetching all bookings details");
@@ -116,8 +117,8 @@ public class CRUDTest extends BaseTest {
         ExtentManager.logStep("List of all bookings details is fetched.");
     }
 
+    // PUT request - update a booking, using the token generated from valid login in AuthTest
     @Test(priority = 4, description = "Test PUT request - update a booking using cookies")
-    // PUT request - update a booking, include cookies for token
     public void testUpdateBooking(){
 
         Map<String, Object> payload = createBookingPayload(
@@ -143,8 +144,8 @@ public class CRUDTest extends BaseTest {
         ExtentManager.logStep("Booking updated successfully with new details");
     }
 
+    // DELETE request - delete a booking, include Authorization cookie in header
     @Test(priority = 5, description = "Test DELETE request - delete a booking using Authorization")
-    // DELETE request - delete a booking, include cookies for token
     public void testDeleteBooking() {
 
         logger.info("Deleting booking with ID: " + bookingId);
