@@ -35,6 +35,16 @@ pipeline {
 
                 // Archive everything in target/ (includes ExtentReports)
                 archiveArtifacts artifacts: 'target/**', fingerprint: true
+
+                // Publish ExtentReport HTML
+                publishHTML(target: [
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: true,
+                    keepAll: true,
+                    reportDir: 'target',             // folder containing extent-report.html
+                    reportFiles: 'extent-report.html', // report file name
+                    reportName: 'Extent Report'
+                ])
             }
         }
     }

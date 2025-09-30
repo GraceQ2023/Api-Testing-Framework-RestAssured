@@ -6,13 +6,6 @@
         <listener class-name="com.myorg.apitests.listeners.TestListener"/>
     </listeners>
 
-
-<!--    <test name="FakeStoreTests">-->
-<!--        <classes>-->
-<!--            <class name="com.myorg.apitests.apis.fakestore.ProductTests"/>-->
-<!--        </classes>-->
-<!--    </test>-->
-
     <test name="Booker API Tests">
         <classes>
             <class name="com.myorg.apitests.apis.booker.AuthTest" />
